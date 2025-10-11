@@ -1892,9 +1892,9 @@ Function17dc1f:
 	ld [wc709], a
 	add $4
 	ld [wc70b], a
-	ld a, $96
+	ld a, LOW(MenuData_17dc96)  
 	ld [wc70d], a
-	ld a, $5c
+	ld a, HIGH(MenuData_17dc96)
 	ld [wc70e], a
 	ld a, $1
 	ld [wc70f], a
@@ -1931,7 +1931,7 @@ Function17dc1f:
 	call Function17e40f
 	ret
 
-MenuData_17dc96: ; unreferenced
+MenuData_17dc96: ; unreferenced   <-- no its not
 	db STATICMENU_CURSOR | STATICMENU_NO_TOP_SPACING | STATICMENU_WRAP ; flags
 	db 2
 	db "YES@"	; "はい@"
@@ -2296,7 +2296,7 @@ Function17de91:
 Function17ded9:
 	call IncCrashCheckPointer
 	ld de, wc708
-	ld bc, $1f
+	ld bc, 19 + NAME_LENGTH + PLAYER_NAME_LENGTH
 	call CopyBytes
 	call Function17e32b
 	ldh a, [rSVBK]
@@ -2338,7 +2338,7 @@ Function17ded9:
 	jr .asm_17df37
 
 .asm_17df33
-	ld de, $6
+	ld de, NAME_LENGTH
 	add hl, de
 
 .asm_17df37
@@ -2349,7 +2349,8 @@ Function17ded9:
 	ld a, [wPartyCount]
 	dec a
 	ld hl, wPartyMonOTs
-	call SkipNames
+	ld bc, PLAYER_NAME_LENGTH
+	call AddNTimes
 	ld d, h
 	ld e, l
 	pop hl
@@ -2363,7 +2364,7 @@ Function17ded9:
 	jr .asm_17df5e
 
 .asm_17df5a
-	ld de, $7
+	ld de, PLAYER_NAME_LENGTH + 1
 	add hl, de
 
 .asm_17df5e
@@ -2504,7 +2505,7 @@ Function17e026:
 	call OpenSRAM
 	ld a, [sBoxCount]
 	call CloseSRAM
-	cp $14
+	cp MONS_PER_BOX
 	jp nc, .asm_17e0ea
 	bit 0, b
 	jp z, .asm_17e0ea
@@ -2520,21 +2521,21 @@ Function17e026:
 	bit 1, b
 	jr z, .asm_17e067
 	push bc
-	ld bc, $b
+	ld bc, NAME_LENGTH
 	ld de, sBoxMonNicknames
 	call CopyBytes
 	pop bc
 	jr .asm_17e06b
 
 .asm_17e067
-	ld de, $6
+	ld de, NAME_LENGTH
 	add hl, de
 
 .asm_17e06b
 	bit 2, b
 	jr z, .asm_17e08e
 	push bc
-	ld bc, $6
+	ld bc, PLAYER_NAME_LENGTH
 	ld de, sBoxMonOTs
 	call CopyBytes
 	ld a, [hli]
@@ -2549,7 +2550,7 @@ Function17e026:
 	jr .asm_17e092
 
 .asm_17e08e
-	ld de, $7
+	ld de, PLAYER_NAME_LENGTH + 1
 	add hl, de
 
 .asm_17e092
