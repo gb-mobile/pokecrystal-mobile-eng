@@ -584,9 +584,9 @@ ClearGSBallFlag:
 	xor a
 	call ByteFill
 	ld hl, sTrainerRankingShortestMagikarp
-	ld a, $03
+	ld a, $3 ; 3 feet
 	ld [hl+], a
-	ld [hl], $e8
+	ld [hl], $6 ; 6 inches
 	call UpdateTrainerRankingsChecksum
 	call CloseSRAM
 	ret
