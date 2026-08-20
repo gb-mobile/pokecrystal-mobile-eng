@@ -167,10 +167,13 @@ pokecrystal_debug_opt   = -Cjv -t PM_CRYSTAL -i BXTE -n 0 -k 01 -l 0x33 -m 0x10 
 pokecrystal11_debug_opt = -Cjv -t PM_CRYSTAL -i BXTE -n 1 -k 01 -l 0x33 -m 0x10 -r 5 -p 0
 pokecrystal11_vc_opt    = -Cjv -t PM_CRYSTAL -i BXTE -n 1 -k 01 -l 0x33 -m 0x10 -r 5 -p 0
 
+pokecrystal_au_stadium_opt = --european
+pokecrystal_eu_stadium_opt = --european
+
 %.gbc: $$(%_obj) layout.link
 	$(RGBLINK) -n $*.sym -m $*.map -l layout.link -o $@ $(filter %.o,$^)
 	$(RGBFIX) $($*_opt) $@
-	#tools/stadium $@
+	tools/stadium $($*_stadium_opt) $@
 
 
 ### LZ compression rules

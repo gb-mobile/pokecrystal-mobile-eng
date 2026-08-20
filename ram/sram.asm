@@ -394,6 +394,7 @@ SECTION "SRAM Mobile 4", SRAM
 ; Bank 7 in bank 6??
 sMobileStadiumFlag:: db
 s7_a001:: ds $799
-sMobileAdapterStatus2:: ds $800
+sMobileAdapterStatus2:: db
+	ds $865
 s7_b000:: ds $fea
 s7_bfea:: ds 1

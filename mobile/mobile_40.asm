@@ -2474,27 +2474,32 @@ Function10107d:
 	ld hl, wc608
 	ld bc, wc7bd - wc608
 	call ByteFill
+
+	ld hl, wOTPartyMonNicknames
+	ld de, wc608 + 13
+	ld bc, MON_NAME_LENGTH
+	call .CopyAllFromOT
+	ld hl, wOTPartyMonOTs
+	ld de, wc608 + 79
+	ld bc, NAME_LENGTH
+	call .CopyAllFromOT
+	ld hl, wOTPartyMon1Species
+	ld de, wc608 + 145
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call .CopyAllFromOT
+
+	; Name +0, big-endian TID +$0b, nicknames
+	; +$0d, OT names +$4f, and 0x30-byte party structs +$91.
+	; wd271 aliases the start of the enemy-party union (the trainer name),
+	; so, using it as an ID produced the first two name bytes instead of the TID.
 	ld hl, wOTPlayerName
 	ld de, wc608
 	ld bc, NAME_LENGTH
 	call CopyBytes
-	ld hl, wd271
-	ld a, [hli]
-	ld [wc608 + 11], a
-	ld a, [hl]
-	ld [wc608 + 12], a
-	ld hl, wOTPartyMonNicknames
-	ld de, wc608 + 13
-	ld bc, NAME_LENGTH
-	call .CopyAllFromOT
-	ld hl, wOTPartyMonOTs
-	ld de, wOTClassName + 1
-	ld bc, NAME_LENGTH
-	call .CopyAllFromOT
-	ld hl, wOTPartyMon1Species
-	ld de, wc699
-	ld bc, PARTYMON_STRUCT_LENGTH
-	call .CopyAllFromOT
+	ld hl, wOTPlayerID
+	ld de, wc608 + 11
+	ld bc, 2
+	call CopyBytes
 	ld a, $50
 	ld [wc7b9], a
 	ld a, $33
