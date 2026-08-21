@@ -143,20 +143,23 @@ Now you're ready to [build **pokecrystal**](#build-pokecrystal).
 To download the **pokecrystal** source files:
 
 ```bash
-git clone https://github.com/pret/pokecrystal
-cd pokecrystal
+git clone https://github.com/gb-mobile/pokecrystal-mobile-eng/
+cd pokecrystal-mobile-eng
 ```
 
 To build **pokecrystal.gbc**:
 
+- US Version:
 ```bash
 make
 ```
-
-To build **pokecrystal11.gbc**:
-
+- EUR Version: 
 ```bash
-make crystal11
+make crystal_eu
+```
+- AUS Version:
+```bash
+make crystal_au
 ```
 
 ### Build with a local rgbds version
